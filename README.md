@@ -1,9 +1,32 @@
-# DevOps Capstone Template
+# DevOps Capstone Project
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Python 3.9](https://img.shields.io/badge/Python-3.9-green.svg)](https://shields.io/)
 
-This repository contains the starter code for the project in [**IBM-CD0285EN-SkillsNetwork DevOps Capstone Project**](https://www.coursera.org/learn/devops-capstone-project?specialization=devops-and-software-engineering) which is part of the [**IBM DevOps and Software Engineering Professional Certificate**](https://www.coursera.org/professional-certificates/devops-and-software-engineering)
+## Project Description
+
+This project implements a Customer Accounts Microservice using Python Flask.
+
+The microservice provides REST APIs to create, read, update, delete,
+and list customer accounts.
+
+The project demonstrates the following DevOps practices:
+
+- Agile Planning using GitHub Projects and Kanban boards
+- Test-Driven Development (TDD) with Python and Nose
+- Continuous Integration (CI) using GitHub Actions
+- Security implementation using Talisman and CORS
+- Containerization using Docker
+- Deployment to Kubernetes
+- Continuous Deployment (CD) using Tekton Pipelines
+
+This project is part of the IBM DevOps and Software Engineering
+Professional Certificate on Coursera.
+
+## Build Status
+
+The GitHub Actions build status badge will be added after
+the CI workflow has been implemented and successfully executed.
 
 ## Usage
 
