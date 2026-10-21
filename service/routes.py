@@ -75,8 +75,15 @@ def read_account(account_id):
 ######################################################################
 # LIST ALL ACCOUNTS
 ######################################################################
+@app.route("/accounts", methods=["GET"])
+def list_accounts():
+    """List all Accounts"""
+    app.logger.info("Listing all accounts")
 
-# ... place you code here to LIST accounts ...
+    accounts = Account.all()
+    account_list = [account.serialize() for account in accounts]
+
+    return jsonify(account_list), status.HTTP_200_OK
 
 
 ######################################################################
