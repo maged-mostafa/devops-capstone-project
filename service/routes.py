@@ -4,7 +4,7 @@ Account Service
 This microservice handles the lifecycle of Accounts
 """
 # pylint: disable=unused-import
-from flask import jsonify, request, make_response, abort, url_for   # noqa; F401
+from flask import jsonify, request, make_response, abort, url_for  # noqa; F401
 from service.models import Account
 from service.common import status  # HTTP Status Codes
 from . import app  # Import Flask application
@@ -57,6 +57,7 @@ def create_accounts():
         jsonify(message), status.HTTP_201_CREATED, {"Location": location_url}
     )
 
+
 ######################################################################
 # READ AN ACCOUNT
 ######################################################################
@@ -68,9 +69,12 @@ def read_account(account_id):
     account = Account.find(account_id)
 
     if not account:
-        abort(status.HTTP_404_NOT_FOUND, f"Account with id '{account_id}' was not found.")
+        abort(
+            status.HTTP_404_NOT_FOUND, f"Account with id '{account_id}' was not found."
+        )
 
     return account.serialize(), status.HTTP_200_OK
+
 
 ######################################################################
 # LIST ALL ACCOUNTS
@@ -105,8 +109,7 @@ def update_account(account_id):
 
     if not account:
         abort(
-            status.HTTP_404_NOT_FOUND,
-            f"Account with id '{account_id}' was not found."
+            status.HTTP_404_NOT_FOUND, f"Account with id '{account_id}' was not found."
         )
 
     account.deserialize(request.get_json())
