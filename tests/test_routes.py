@@ -90,9 +90,7 @@ class TestAccountService(TestCase):
         """It should Create a new Account"""
         account = AccountFactory()
         response = self.client.post(
-            BASE_URL,
-            json=account.serialize(),
-            content_type="application/json"
+            BASE_URL, json=account.serialize(), content_type="application/json"
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -117,9 +115,7 @@ class TestAccountService(TestCase):
         """It should not Create an Account when sending the wrong media type"""
         account = AccountFactory()
         response = self.client.post(
-            BASE_URL,
-            json=account.serialize(),
-            content_type="test/html"
+            BASE_URL, json=account.serialize(), content_type="test/html"
         )
         self.assertEqual(response.status_code, status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
@@ -149,7 +145,7 @@ class TestAccountService(TestCase):
 
         data = response.get_json()
         self.assertEqual(len(data), 5)
-        
+
     def test_update_account(self):
         """It should Update an existing Account"""
         # Create an account
@@ -161,10 +157,7 @@ class TestAccountService(TestCase):
         account_data["name"] = new_name
 
         # Send PUT request
-        response = self.client.put(
-            f"{BASE_URL}/{account.id}",
-            json=account_data
-        )
+        response = self.client.put(f"{BASE_URL}/{account.id}", json=account_data)
 
         # Verify HTTP response
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -176,33 +169,22 @@ class TestAccountService(TestCase):
         # Verify the database was updated
         updated_account = Account.find(account.id)
         self.assertEqual(updated_account.name, new_name)
-        
+
     def test_update_account_not_found(self):
         """It should not Update an Account that does not exist"""
-        account_data = {
-            "name": "Nonexistent Account"
-        }
+        account_data = {"name": "Nonexistent Account"}
 
-        response = self.client.put(
-            f"{BASE_URL}/0",
-            json=account_data
-        )
+        response = self.client.put(f"{BASE_URL}/0", json=account_data)
 
-        self.assertEqual(
-            response.status_code,
-            status.HTTP_404_NOT_FOUND
-        )
-    
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
     def test_delete_account(self):
         """It should Delete an existing Account"""
         account = self._create_accounts(1)[0]
 
         response = self.client.delete(f"{BASE_URL}/{account.id}")
 
-        self.assertEqual(
-            response.status_code,
-            status.HTTP_204_NO_CONTENT
-        )
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
         # Verify the account no longer exists
         deleted_account = Account.find(account.id)
@@ -212,7 +194,4 @@ class TestAccountService(TestCase):
         """It should not allow deleting all Accounts"""
         response = self.client.delete(BASE_URL)
 
-        self.assertEqual(
-            response.status_code,
-            status.HTTP_405_METHOD_NOT_ALLOWED
-        )
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
