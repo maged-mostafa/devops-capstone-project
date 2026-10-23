@@ -23,6 +23,8 @@ HTTPS_ENVIRON = {"wsgi.url_scheme": "https"}
 ######################################################################
 #  T E S T   C A S E S
 ######################################################################
+
+
 class TestAccountService(TestCase):
     """Account Service Tests"""
 
@@ -117,7 +119,9 @@ class TestAccountService(TestCase):
         response = self.client.post(
             BASE_URL, json=account.serialize(), content_type="test/html"
         )
-        self.assertEqual(response.status_code, status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
     def test_get_account(self):
         """It should Get a single Account"""
@@ -157,7 +161,9 @@ class TestAccountService(TestCase):
         account_data["name"] = new_name
 
         # Send PUT request
-        response = self.client.put(f"{BASE_URL}/{account.id}", json=account_data)
+        response = self.client.put(
+            f"{BASE_URL}/{account.id}",
+            json=account_data)
 
         # Verify HTTP response
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -194,7 +200,9 @@ class TestAccountService(TestCase):
         """It should not allow deleting all Accounts"""
         response = self.client.delete(BASE_URL)
 
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_security_headers(self):
         """It should return security headers"""
@@ -207,14 +215,13 @@ class TestAccountService(TestCase):
             "Content-Security-Policy": "default-src 'self'; object-src 'none'",
             "Referrer-Policy": "strict-origin-when-cross-origin",
         }
-    
+
         for key, value in headers.items():
             self.assertEqual(response.headers.get(key), value)
-
 
     def test_cors_security(self):
         """It should return a CORS header"""
         response = self.client.get("/", environ_overrides=HTTPS_ENVIRON)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.headers.get("Access-Control-Allow-Origin"), "*")
-        
+        self.assertEqual(response.headers.get(
+            "Access-Control-Allow-Origin"), "*")
