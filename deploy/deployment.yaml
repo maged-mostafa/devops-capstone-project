@@ -19,8 +19,8 @@ spec:
     spec:
       containers:
         - name: accounts
-          image: accounts:latest
-          imagePullPolicy: Never
+          image: tekton-registry:5000/accounts:latest
+          imagePullPolicy: Always
 
           ports:
             - containerPort: 8080
