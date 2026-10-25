@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: accounts
+  labels:
+    app: accounts
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: accounts
+
+  template:
+    metadata:
+      labels:
+        app: accounts
+
+    spec:
+      containers:
+        - name: accounts
+          image: accounts:latest
+          imagePullPolicy: Never
+
+          ports:
+            - containerPort: 8080
+
+          env:
+            - name: DATABASE_URI
+              valueFrom:
+                secretKeyRef:
+                  name: accounts-db
+                  key: database-uri
